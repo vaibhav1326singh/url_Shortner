@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const path = require("path")
 const cookieParser = require("cookie-parser")
 const Url = require('./model/url.model.js')
-const {checkloggedInUser} = require("./middleware/auth.middleware.js")
+const {checkloggedInUser,checkAuth} = require("./middleware/auth.middleware.js")
 const {connectMongoDB} = require('./mongooes.connect.js')
 
 // routes
@@ -38,7 +38,7 @@ app.use(cookieParser())
 
 
 app.use('/url',checkloggedInUser,urlRoute)
-app.use('/',staticRoute)
+app.use('/',checkAuth,staticRoute)
 app.use('/user',userRoutes)
 
 

@@ -1,11 +1,11 @@
 const {getUser} = require("../service/auth.service.js")
 
 const checkloggedInUser = async (req,res,next) =>{
-    const userUid = req.cookie.uid
+    const userUid = req.cookies.uid
 
     if(!userUid) return res.redirect("/login")
     
-    const user = getUser(userUid)
+    const user = await getUser(userUid)
 
     if(!user) return res.redirect("/login")
 
@@ -14,4 +14,18 @@ const checkloggedInUser = async (req,res,next) =>{
     next()
 }
 
-module.exports = {checkloggedInUser}
+const checkAuth = async (req,res,next) =>{
+    const userUid = req.cookies.uid
+
+    
+    
+    const user = await getUser(userUid)
+
+    
+
+    req.user = user
+
+    next()
+}
+
+module.exports = {checkloggedInUser,checkAuth}
