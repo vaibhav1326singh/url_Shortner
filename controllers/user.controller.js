@@ -21,7 +21,7 @@ const handleUserSignup = async (req, res) => {
 const handleUserLogin = async (req, res) => {
   const { email, password } = req.body;
   const userInfo = await User.findOne({ email });
-  console.log(userInfo)
+  // console.log(userInfo)
   if (!userInfo)
     return res.render("login", { error: "User is not registered" });
 

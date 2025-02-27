@@ -1,31 +1,32 @@
-const {getUser} = require("../service/auth.service.js")
+const { getUser } = require("../service/auth.service.js");
 
-const checkloggedInUser = async (req,res,next) =>{
-    const userUid = req.cookies.uid
+const checkloggedInUser = async (req, res, next) => {
+    console.log(req.cookies, "Cookies in request")
+  const userUid = req.cookies.uid;
 
-    if(!userUid) return res.redirect("/login")
-    
-    const user = await getUser(userUid)
+  if (!userUid) return res.redirect("/login");
 
-    if(!user) return res.redirect("/login")
+  const user = await getUser(userUid);
 
-    req.user = user
+  if (!user) return res.redirect("/login");
 
-    next()
-}
+  req.user = user;
 
-const checkAuth = async (req,res,next) =>{
-    const userUid = req.cookies.uid
+  next();
+};
 
-    
-    
-    const user = await getUser(userUid)
+const checkAuth = async (req, res, next) => {
+  const userUid = req.cookies.uid;
 
-    
+  const user = await getUser(userUid);
 
-    req.user = user
+  console.log(userUid, "User UID from cookie");
+console.log(user, "User object fetched from getUser");
 
-    next()
-}
 
-module.exports = {checkloggedInUser,checkAuth}
+  req.user = user;
+
+  next();
+};
+
+module.exports = { checkloggedInUser, checkAuth };
